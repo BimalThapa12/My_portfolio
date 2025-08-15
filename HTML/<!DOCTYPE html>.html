@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Scroll Triggered Card Slide</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 120vh;
+      background: #f3f4f6;
+    }
+
+    section {
+      padding: 100px 0;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: white;
+      border: 2px solid #114b4f32;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      border-radius: 16px;
+      opacity: 0;
+      transform: translateX(100px); /* Default: move in from right */
+      transition: transform 0.6s ease, opacity 0.6s ease;
+    }
+
+    .section2 .card {
+      transform: translateX(-100px); /* For section2: move in from left */
+    }
+
+    .card.visible {
+      opacity: 1;
+      transform: translateX(0); /* Slide into place */
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+<section class="section1">
+  <div class="card-grid">
+    <div class="card"><h3>Section 1 - Card 1</h3><p>Slides in from right</p></div>
+    <div class="card"><h3>Section 1 - Card 2</h3><p>Triggered on scroll</p></div>
+    <div class="card"><h3>Section 1 - Card 3</h3><p>Nice horizontal motion</p></div>
+  </div>
+</section>
+
+<section class="section2">
+  <div class="card-grid">
+    <div class="card"><h3>Section 2 - Card A</h3><p>Slides in from left</p></div>
+    <div class="card"><h3>Section 2 - Card B</h3><p>Also scroll-triggered</p></div>
+    <div class="card"><h3>Section 2 - Card C</h3><p>Smooth effect</p></div>
+  </div>
+</section>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.2 });
+
+  document.querySelectorAll('.card').forEach(card => {
+    observer.observe(card);
+  });
+</script>
+
+</body>
+</html>
